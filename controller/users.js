@@ -12,7 +12,7 @@ var fetch = function onFetch(req, res, next) {
 
 	User.paginate({}, {
 		page: (req.query.page) ? parseInt(req.query.page, 10) : 1,
-		limit: (req.query.limit) ? parseInt(req.query.limit, 10) : process.env.APPLICATION_SEARCH_LIMIT,
+		limit: (req.query.limit) ? parseInt(req.query.limit, 10) : parseInt(process.env.APPLICATION_SEARCH_LIMIT, 10),
 		sort: (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'lastname',
 		select: (req.query.select) ? req.query.select.replace(/,/g, ' ') : undefined,
 	}).then(function onPaginate(result) {
