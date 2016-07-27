@@ -6,17 +6,19 @@ var fetch = function onFetch(req, res, next) {
 	// ?page={int}
 	// ?sort={csv}
 	// ?select={csv}
-	var resultsObject = {};
+	var resultsObject = {
+		users: []
+	};
 
 	User.paginate({}, {
-		page: parseInt(req.query.page, 10) || 1,
-		limit: parseInt(req.query.limit, 10) || 10,
-		sort: req.query.sort.replace(/,/g, ' ') || 'lastname',
-		select: req.query.select.replace(/,/g, ' ') || undefined,
+		page: (req.query.page) ? parseInt(req.query.page, 10) : 1,
+		limit: (req.query.limit) ? parseInt(req.query.limit, 10) : 10,
+		sort: (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'lastname',
+		select: (req.query.select) ? req.query.select.replace(/,/g, ' ') : undefined,
 	}).then(function onPaginate(result) {
 		if (!result.docs.length) return next(new Error('Users not found'));
 
-		resultsObject.pagination = {
+		resultsObject.found = {
 			total: result.total,
 			limit: result.limit,
 			page: result.page,
