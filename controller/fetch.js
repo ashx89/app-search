@@ -32,7 +32,7 @@ var fetch = function onFetch(req, res, next) {
 	model.paginate(query, pagination).then(function onPaginate(result) {
 		if (!result.docs.length) return next(new Error('Items not found'));
 
-		resultsObject.found = {
+		resultsObject.meta = {
 			total: result.total,
 			limit: result.limit,
 			page: result.page,
