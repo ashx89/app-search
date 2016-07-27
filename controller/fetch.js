@@ -21,7 +21,7 @@ var fetch = function onFetch(req, res, next) {
 		query = { type: req.params.model };
 		validation = process.env.APPLICATION_PRODUCTS.split(',').indexOf(req.params.model) >= 0;
 		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'user';
-		if (!validation) return res.status(200).json({ items: [], found: {} });
+		if (!validation) return next();
 		break;
 	}
 
