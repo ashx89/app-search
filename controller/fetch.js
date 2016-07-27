@@ -12,9 +12,9 @@ var fetch = function onFetch(req, res, next) {
 	};
 
 	switch (req.params.model) {
-	case 'orders':
-		model = Models.OrderModel;
-		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'createdAt';
+	case 'accounts':
+		model = Models.AccountModel;
+		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'storename';
 		break;
 	default:
 		model = Models.ProductModel;
