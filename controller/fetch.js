@@ -12,19 +12,17 @@ var fetch = function onFetch(req, res, next) {
 	};
 
 	switch (req.params.model) {
-	case 'products':
+	case 'orders':
+		model = Models.OrderModel;
+		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'createdAt';
+		break;
+	default:
 		model = Models.ProductModel;
 		query = { type: req.params.model };
 		validation = process.env.APPLICATION_PRODUCTS.split(',').indexOf(req.params.model) === -1;
 		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'user';
+		if (!validation) return res.status(200).json({ items: [], found: {} });
 		break;
-	case 'orders':
-		model = Models.OrderModel;
-		query = { type: req.params.model };
-		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'createdAt';
-		break;
-	default:
-		return res.status(200).json({ items: [], found: {} });
 	}
 
 	var resultsObject = {
