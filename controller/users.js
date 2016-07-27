@@ -2,12 +2,8 @@ var User = require(global.__base + '/manager').UserModel;
 var Account = require(global.__base + '/manager').AccountModel;
 
 var fetch = function onFetch(req, res, next) {
-	// ?limit={int}
-	// ?page={int}
-	// ?sort={csv}
-	// ?select={csv}
 	var resultsObject = {
-		users: []
+		items: []
 	};
 
 	User.paginate({}, {
@@ -29,7 +25,7 @@ var fetch = function onFetch(req, res, next) {
 			Account.find({ user: user._id }, function onFind(err, account) {
 				if (err) return next(err);
 
-				resultsObject.users.push({ user: user, account: account });
+				resultsObject.items.push({ user: user, account: account });
 
 				if (result.docs.length === index + 1) return res.status(200).json(resultsObject);
 			});

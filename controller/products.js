@@ -3,7 +3,9 @@ var Product = require(global.__base + '/manager').ProductModel;
 var fetch = function onFetch(req, res, next) {
 	if (process.env.APPLICATION_PRODUCTS.split(',').indexOf(req.params.product) === -1) return next(new Error('Resource not found'));
 
-	var resultsObject = { products: [] };
+	var resultsObject = { 
+		items: [] 
+	};
 
 	Product.paginate({ type: req.params.product }, {
 		page: (req.query.page) ? parseInt(req.query.page, 10) : 1,
@@ -20,7 +22,7 @@ var fetch = function onFetch(req, res, next) {
 			pages: result.pages
 		};
 
-		resultsObject.products = result.docs;
+		resultsObject.items = result.docs;
 
 		return res.status(200).json(resultsObject);
 	});
