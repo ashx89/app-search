@@ -18,14 +18,14 @@ var fetch = function onFetch(req, res, next) {
 		break;
 	case 'accounts':
 		model = Models.AccountModel;
-		(req.query.lat) ? query = {
+		(req.query.lat && req.query.lng && req.query.distance) ? query = {
 			'address.location': {
 				$near: {
 					$geometry: {
 						type: 'Point',
 						coordinates: [req.query.lat, req.query.lng]
 					},
-					$maxDistance: req.query.distance || 500
+					$maxDistance: req.query.distance || parseInt(process.env.APPLICATION_SEARCH_LOCATION_DISTANCE, 10)
 				}
 			}
 		} : {};
