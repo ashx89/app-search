@@ -19,12 +19,14 @@ var fetch = function onFetch(req, res, next) {
 	case 'accounts':
 		model = Models.AccountModel;
 		(req.query.lat) ? query = {
-			$near: {
-				$geometry: {
-					type: 'Point',
-					coordinates: [req.query.lat, req.query.lng]
-				},
-				$maxDistance: req.query.distance || 500
+			'address.location': {
+				$near: {
+					$geometry: {
+						type: 'Point',
+						coordinates: [req.query.lat, req.query.lng]
+					},
+					$maxDistance: req.query.distance || 500
+				}
 			}
 		} : {};
 		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'storename';
