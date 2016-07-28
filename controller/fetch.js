@@ -18,6 +18,7 @@ var fetch = function onFetch(req, res, next) {
 		break;
 	case 'accounts':
 		model = Models.AccountModel;
+		(req.query.lat) ? query = { $near: [req.query.lat, req.query.lng], $maxDistance: req.query.distance || 500 } : {};
 		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'storename';
 		break;
 	default:
