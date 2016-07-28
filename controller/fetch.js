@@ -12,6 +12,10 @@ var fetch = function onFetch(req, res, next) {
 	};
 
 	switch (req.params.model) {
+	case 'users':
+		model = Models.UserModel;
+		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'lastname';
+		break;
 	case 'accounts':
 		model = Models.AccountModel;
 		pagination.sort = (req.query.sort) ? req.query.sort.replace(/,/g, ' ') : 'storename';
